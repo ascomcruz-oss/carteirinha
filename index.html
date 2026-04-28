@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carteirinha</title>
+
+<style>
+body {
+  margin: 0;
+  background: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* FUNDO COM IMAGEM */
+.carteira {
+   width: 900px; /* diminui geral */
+  aspect-ratio: 2048 / 921; /* proporção REAL da imagem */
+
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+
+  background: url('fundo.png') no-repeat center;
+  background-size: contain; /* NÃO corta nem estica */
+  background-color: #fff; /* fundo caso sobre espaço */
+}
+
+/* FOTO */
+.foto {
+  position: absolute;
+  top: 20%;
+  left: 15.8%;
+  width: 20%;
+  height: 60%;
+}
+
+.foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/* INPUTS (AGORA SEM CAIXA, pq já tem no fundo) */
+.input {
+   display: flex;
+  align-items: center;
+  position: absolute;
+  width: 43%;
+  padding: 0.6%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.95rem;
+}
+.nome { top: 31.5%; left: 40.7%; }
+.cpf  { top: 46.5%; left: 40.7%; }
+.inst { top: 63.5%; left: 40.7%; }
+
+/* ANO (se quiser editar depois) */
+.ano {
+  position: absolute;
+  bottom: 40px;
+  left: 80px;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+/* BOTÃO */
+.btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 15px;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* upload */
+.upload {
+  position: absolute;
+  bottom: 10px;
+  left: 0px;
+}
+
+/* PRINT */
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .btn, .upload {
+    display: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="carteira">
+
+  <!-- FOTO -->
+  <div class="foto">
+    <img id="preview">
+  </div>
+
+  <input class="upload" type="file" accept="image/*" onchange="carregarFoto(event)">
+
+  <!-- INPUTS -->
+  <input class="input nome" placeholder="NOME">
+  <input class="input cpf" placeholder="CPF">
+  <input class="input inst" placeholder="INSTITUIÇÃO DE ENSINO">
+
+</div>
+
+<button class="btn" onclick="window.print()">Baixar PDF</button>
+
+<script>
+function carregarFoto(event) {
+  const img = document.getElementById('preview');
+  const file = event.target.files[0];
+
+  if (file) {
+    img.src = URL.createObjectURL(file);
+  }
+}
+</script>
+
+</body>
+</html>
